@@ -1,20 +1,32 @@
 module clkgen(
     input clk,
+    input clk_en,
+    input rst,
     output reg clk_out
 );
 
-reg [0:0] count;
+parameter clk_freq = 1000;
+parameter countlimit = 50000000/2/clk_freq;
 
-initial begin
-    count = 1'd0;
-    clk_out = 1'b0;
-end
+reg [31:0] count;
 
 always @(posedge clk) begin
-    count <= count + 1'd1;
-    if (count == 1'd1) begin
-        clk_out <= ~clk_out;
-        count <= 1'd0;
+    if(rst) begin
+        count <= 32'd0;
+        clk_out <= 1'b0;
+    end
+    else begin
+        if(clk_en) begin
+        count <= count + 1;
+            if(count>=countlimit) begin
+                count <= 32'd0;
+                clk_out<=~clk_en;
+            end else 
+                clk_out <= clk_out;
+        end else begin
+            count <= count;
+            clk_out <= clk_out;
+        end
     end
 end
 

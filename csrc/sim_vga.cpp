@@ -8,8 +8,8 @@ static Vvga dut;
 void nvboard_bind_all_pins(Vvga* top);
 
 static void single_cycle() {
-  dut.CLOCK_50 = 0; dut.eval();
-  dut.CLOCK_50 = 1; dut.eval();
+  dut.clk = 0; dut.eval();
+  dut.clk = 1; dut.eval();
 }
 
 int main() {
@@ -22,7 +22,7 @@ int main() {
   printf("Pixel Clock: 25MHz\n");
   printf("Frame Pixels: 800x525 = 420,000\n");
   printf("Calculated FPS: 25,000,000 / 420,000 = 59.52 Hz\n");
-  printf("CLOCK_50 cycles per frame: 420,000 * 2 = 840,000\n");
+  printf("clk cycles per frame: 420,000 * 2 = 840,000\n");
   
   const int FRAME_CYCLES = 840000;
   int frame_count = 0;

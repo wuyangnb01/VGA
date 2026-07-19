@@ -1,15 +1,15 @@
 module vga_ctrl(
     input           pclk,     //25MHz时钟
     input           reset,    //置位
-    input  [11:0]   vga_data, //上层模块提供的VGA颜色数据(12-bit RGB444)
+    input  [23:0]   vga_data, //上层模块提供的VGA颜色数据(12-bit RGB444)
     output [9:0]    h_addr,   //提供给上层模块的当前扫描像素点坐标
-    output [9:0]    v_addr,
+    output [8:0]    v_addr,
     output          hsync,    //行同步和列同步信号
     output          vsync,
     output          valid,    //消隐信号
-    output [3:0]    vga_r,    //红绿蓝颜色信号
-    output [3:0]    vga_g,
-    output [3:0]    vga_b
+    output [7:0]    vga_r,
+    output [7:0]    vga_g,
+    output [7:0]    vga_b
     );
 
   //640x480分辨率下的VGA参数设置
@@ -27,7 +27,7 @@ module vga_ctrl(
 
   //像素计数值
   reg [9:0] x_cnt;
-  reg [9:0] y_cnt;
+  reg [8:0] y_cnt;
   wire h_valid;
   wire v_valid;
 
@@ -44,12 +44,12 @@ module vga_ctrl(
 
   always @(posedge pclk) begin //列像素计数
       if (reset == 1'b1) begin
-          y_cnt <= 10'd0;
+          y_cnt <= 9'd0;
       end else begin
           if (x_cnt == H_TOTAL - 1) begin
-              y_cnt <= y_cnt + 10'd1;
+              y_cnt <= y_cnt + 9'd1;
               if (y_cnt == V_TOTAL - 1) begin
-                  y_cnt <= 10'd0;
+                  y_cnt <= 9'd0;
               end
           end
       end
@@ -63,10 +63,10 @@ module vga_ctrl(
   assign valid = h_valid && v_valid;
   
   assign h_addr = h_valid ? (x_cnt - (H_SYNC + H_FRONT)) : 10'd0;
-  assign v_addr = v_valid ? (y_cnt - (V_SYNC + V_FRONT)) : 10'd0;
+  assign v_addr = v_valid ? (y_cnt - (V_SYNC + V_FRONT)) : 9'd0;
   
-  assign vga_r = valid ? vga_data[11:8] : 4'd0;
-  assign vga_g = valid ? vga_data[7:4] : 4'd0;
-  assign vga_b = valid ? vga_data[3:0] : 4'd0;
+  assign vga_r = valid ? vga_data[23:16] : 8'd0;
+  assign vga_g = valid ? vga_data[15:8] : 8'd0;
+  assign vga_b = valid ? vga_data[7:0] : 8'd0;
   
 endmodule
