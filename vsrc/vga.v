@@ -1,5 +1,5 @@
 module vga(
-    input clk,
+    input CLOCK_50,
     input rst,
     output VGA_HSYNC, //行同步和列同步信号
     output VGA_VSYNC,
@@ -17,18 +17,14 @@ wire [8:0] addr_v;
 wire [7:0] r4, g4, b4;
 wire [23:0] data;
 
-// output declaration of module clkgen
-clkgen u_clkgen(
-    .rst (),
-    .clk (clk ),
-    .clk_en (1'b1),
-    .clk_out (pclk)
+clkgen clkgen_inst(
+    .clk(CLOCK_50),
+    .clk_out(pclk)
 );
-
 
 vga_ctrl vga_ctrl_inst(
     .pclk(pclk),
-    .reset(),
+    .reset(1'b0),
     .vga_data(data),
     .h_addr(addr_h),
     .v_addr(addr_v),

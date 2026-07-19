@@ -9,7 +9,7 @@
 Vvga::Vvga(VerilatedContext* _vcontextp__, const char* _vcname__)
     : VerilatedModel{*_vcontextp__}
     , vlSymsp{new Vvga__Syms(contextp(), _vcname__, this)}
-    , clk{vlSymsp->TOP.clk}
+    , CLOCK_50{vlSymsp->TOP.CLOCK_50}
     , rst{vlSymsp->TOP.rst}
     , VGA_HSYNC{vlSymsp->TOP.VGA_HSYNC}
     , VGA_VSYNC{vlSymsp->TOP.VGA_VSYNC}

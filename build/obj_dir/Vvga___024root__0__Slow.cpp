@@ -9,7 +9,7 @@ VL_ATTR_COLD void Vvga___024root___eval_static(Vvga___024root* vlSelf) {
     Vvga__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     auto& vlSelfRef = std::ref(*vlSelf).get();
     // Body
-    vlSelfRef.__Vtrigprevexpr___TOP__clk__0 = vlSelfRef.clk;
+    vlSelfRef.__Vtrigprevexpr___TOP__CLOCK_50__0 = vlSelfRef.CLOCK_50;
     vlSelfRef.__Vtrigprevexpr___TOP__vga__DOT__pclk__0 
         = vlSelfRef.vga__DOT__pclk;
 }
@@ -20,6 +20,8 @@ VL_ATTR_COLD void Vvga___024root___eval_initial(Vvga___024root* vlSelf) {
     auto& vlSelfRef = std::ref(*vlSelf).get();
     // Body
     vlSelfRef.VGA_SYNC_N = 0U;
+    vlSelfRef.vga__DOT__clkgen_inst__DOT__count = 0U;
+    vlSelfRef.vga__DOT__pclk = 0U;
     VL_READMEM_N(true, 24, 524288, 0, "resource/picture.hex"s
                  ,  &(vlSelfRef.vga__DOT__vmem_usage__DOT__vga_mem)
                  , 0, ~0ULL);
@@ -31,6 +33,8 @@ VL_ATTR_COLD void Vvga___024root___eval_initial__TOP(Vvga___024root* vlSelf) {
     auto& vlSelfRef = std::ref(*vlSelf).get();
     // Body
     vlSelfRef.VGA_SYNC_N = 0U;
+    vlSelfRef.vga__DOT__clkgen_inst__DOT__count = 0U;
+    vlSelfRef.vga__DOT__pclk = 0U;
     VL_READMEM_N(true, 24, 524288, 0, "resource/picture.hex"s
                  ,  &(vlSelfRef.vga__DOT__vmem_usage__DOT__vga_mem)
                  , 0, ~0ULL);
@@ -285,7 +289,7 @@ VL_ATTR_COLD void Vvga___024root___dump_triggers__act(const VlUnpacked<QData/*63
         VL_DBG_MSGS("         No '" + tag + "' region triggers active\n");
     }
     if ((1U & (IData)(triggers[0U]))) {
-        VL_DBG_MSGS("         '" + tag + "' region trigger index 0 is active: @(posedge clk)\n");
+        VL_DBG_MSGS("         '" + tag + "' region trigger index 0 is active: @(posedge CLOCK_50)\n");
     }
     if ((1U & (IData)((triggers[0U] >> 1U)))) {
         VL_DBG_MSGS("         '" + tag + "' region trigger index 1 is active: @(posedge vga.pclk)\n");
@@ -298,7 +302,7 @@ VL_ATTR_COLD void Vvga___024root___ctor_var_reset(Vvga___024root* vlSelf) {
     Vvga__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     auto& vlSelfRef = std::ref(*vlSelf).get();
     // Body
-    vlSelf->clk = 0;
+    vlSelf->CLOCK_50 = 0;
     vlSelf->rst = 0;
     vlSelf->VGA_HSYNC = 0;
     vlSelf->VGA_VSYNC = 0;
@@ -308,9 +312,7 @@ VL_ATTR_COLD void Vvga___024root___ctor_var_reset(Vvga___024root* vlSelf) {
     vlSelf->VGA_G = 0;
     vlSelf->VGA_B = 0;
     vlSelf->vga__DOT__pclk = 0;
-    vlSelf->vga__DOT__u_clkgen__DOT__rst = 0;
-    vlSelf->vga__DOT__u_clkgen__DOT__count = 0;
-    vlSelf->vga__DOT__vga_ctrl_inst__DOT__reset = 0;
+    vlSelf->vga__DOT__clkgen_inst__DOT__count = 0;
     vlSelf->vga__DOT__vga_ctrl_inst__DOT__x_cnt = 0;
     vlSelf->vga__DOT__vga_ctrl_inst__DOT__y_cnt = 0;
     for (int __Vi0 = 0; __Vi0 < 524288; ++__Vi0) {
@@ -322,7 +324,7 @@ VL_ATTR_COLD void Vvga___024root___ctor_var_reset(Vvga___024root* vlSelf) {
     for (int __Vi0 = 0; __Vi0 < 1; ++__Vi0) {
         vlSelf->__VactTriggered[__Vi0] = 0;
     }
-    vlSelf->__Vtrigprevexpr___TOP__clk__0 = 0;
+    vlSelf->__Vtrigprevexpr___TOP__CLOCK_50__0 = 0;
     vlSelf->__Vtrigprevexpr___TOP__vga__DOT__pclk__0 = 0;
     for (int __Vi0 = 0; __Vi0 < 1; ++__Vi0) {
         vlSelf->__VnbaTriggered[__Vi0] = 0;
